@@ -50,8 +50,7 @@ public class SkillsController {
     public ResponseEntity<?> updateSkill(@PathVariable int id, @RequestParam("skills") MultipartFile file) throws IOException {
         Optional<Skill> skill = service.getSkillById(id);
         if(skill.isPresent()){
-            service.deleteSkillById(id);
-            String updatedSkill = service.updateSkillById(file);
+            String updatedSkill = service.updateSkillById(file, id);
             return ResponseEntity.status(HttpStatus.OK)
                     .body(updatedSkill);
         } else{

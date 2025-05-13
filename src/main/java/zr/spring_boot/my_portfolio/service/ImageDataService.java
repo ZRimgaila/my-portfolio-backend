@@ -39,4 +39,20 @@ public class ImageDataService {
     public Optional<ImageData> getImageById(int id) {
         return repo.findById(id);
     }
+
+    public String updateImage(int id, MultipartFile file, String description) throws IOException {
+        ImageData updatedImage = repo.save(ImageData.builder()
+                .id(id)
+                .name(file.getOriginalFilename())
+                .description(description)
+                .imageType(file.getContentType())
+                .imageData(file.getBytes())
+                .build()
+        );
+        if(updatedImage != null){
+            return "Image updated successfully: " + file.getOriginalFilename();
+        } else{
+            return "Something wrong with update";
+        }
+    }
 }

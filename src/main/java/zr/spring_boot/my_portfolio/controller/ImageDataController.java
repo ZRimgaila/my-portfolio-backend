@@ -39,4 +39,17 @@ public class ImageDataController {
                     .body(imageData.getImageData());
         }
     }
+
+    @PutMapping("/image/{id}")
+    public ResponseEntity<?> updateImage(@PathVariable int id, @RequestParam("image") MultipartFile file, @RequestParam String description) throws IOException {
+        Optional<ImageData> imageOptional = service.getImageById(id);
+        if(imageOptional.isPresent()){
+            String updatedImage = service.updateImage(id, file, description);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(updatedImage);
+        } else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Image with such id not found");
+        }
+    }
 }

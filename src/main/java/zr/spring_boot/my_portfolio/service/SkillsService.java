@@ -40,8 +40,9 @@ public class SkillsService {
         return repo.findById(id);
     }
 
-    public String updateSkillById(MultipartFile file) throws IOException {
+    public String updateSkillById(MultipartFile file, int id) throws IOException {
         Skill skill = repo.save(Skill.builder()
+                .id(id)
                 .name(file.getOriginalFilename())
                 .imageType(file.getContentType())
                 .imageData(file.getBytes())
